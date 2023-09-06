@@ -1,132 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Calculator</title>
+    <title>CALCULATOR</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .calculator {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 20px;
-            width: 300px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        input[type="number"] {
+        input[type="text"] {
             width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            height: 30px;
+            font-size: 20px;
+            color: white;
+            background-color: #87CEEB;
         }
-
-        .button-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
         }
-
         button {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            margin-right: 10px;
-            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            width: 70px;
+            height: 70px;
+            margin: 5px;
+            border-radius: 10px;
+            background-color: #87CEEB;
         }
-
-        button:hover {
-            background-color: #555;
-        }
-
-        #result {
-            font-size: 18px;
-            margin-top: 10px;
-            color: #333;
+        #operations {
+            background-color: pink;
         }
     </style>
 </head>
 <body>
-    <h1>Simple Calculator using JavaScript</h1>
+    <input type="text" id="result" disabled>
     <div class="calculator">
-        <label for="num1">Enter the first number: </label>
-        <input type="number" id="num1"><br><br>
-
-        <label for="num2">Enter the second number: </label>
-        <input type="number" id="num2"><br><br>
-
-        <div class="button-row">
-            <button onclick="calculate('add')">Addition</button>
-        </div>
-        <div class="button-row">
-            <button onclick="calculate('subtract')">Subtraction</button>
-        </div>
-        <div class="button-row">
-            <button onclick="calculate('multiply')">Multiplication</button>
-        </div>
-        <div class="button-row">
-            <button onclick="calculate('divide')">Division</button>
-        </div>
-        <div class="button-row">
-            <button onclick="calculate('modulus')">Modulus</button>
-        </div>
-        <div class="button-row">
-            <button onclick="calculate('exponent')">Exponentiation</button>
-        </div>
-
-        <p id="result">Result: </p>
+        <button onclick="addToResult('7')">7</button>
+        <button onclick="addToResult('8')">8</button>
+        <button onclick="addToResult('9')">9</button>
+        <button onclick="clearResult()" id ="operations">C</button>
+        <button onclick="addToResult('4')">4</button>
+        <button onclick="addToResult('5')">5</button>
+        <button onclick="addToResult('6')">6</button>
+        <button onclick="backspace()" id ="operations">←</button>
+        <button onclick="addToResult('1')">1</button>
+        <button onclick="addToResult('2')">2</button>
+        <button onclick="addToResult('3')">3</button>
+        <button onclick="addToResult('+')" id ="operations">+</button>
+        <button onclick="addToResult('0')">0</button>
+        <button onclick="addToResult('-')" id="operations">-</button>
+        <button onclick="addToResult('*')" id="operations">*</button>
+        <button onclick="addToResult('/')" id="operations">/</button>
+        <button onclick="calculateResult()" id="operations">=</button>
+        <button onclick="addToResult('.')" id="operations">.</button>
+        <button onclick="addToResult('%')" id="operations">%</button>
+        <button onclick="addToResult('**')" id="operations">^</button>
     </div>
 
     <script>
-        function calculate(operation) {
-            var num1 = parseFloat(document.getElementById("num1").value);
-            var num2 = parseFloat(document.getElementById("num2").value);
-            var result;
+        function addToResult(value) {
+            document.getElementById('result').value += value;
+        }
 
-            switch (operation) {
-                case 'add':
-                    result = num1 + num2;
-                    break;
-                case 'subtract':
-                    result = num1 - num2;
-                    break;
-                case 'multiply':
-                    result = num1 * num2;
-                    break;
-                case 'divide':
-                    if (num2 !== 0) {
-                        result = num1 / num2;
-                    } else {
-                        result = "Cannot divide by zero";
-                    }
-                    break;
-                case 'modulus':
-                    result = num1 % num2;
-                    break;
-                case 'exponent':
-                    result = Math.pow(num1, num2);
-                    break;
-                default:
-                    result = "Invalid operation";
+        function clearResult() {
+            document.getElementById('result').value = '';
+        }
+
+        function backspace() {
+            const currentResult = document.getElementById('result').value;
+            document.getElementById('result').value = currentResult.slice(0, -1);
+        }
+
+        function calculateResult() {
+            const expression = document.getElementById('result').value;
+            try {
+                const result = eval(expression);
+                document.getElementById('result').value = result;
+            } catch (error) {
+                alert('Invalid expression');
             }
-
-            document.getElementById("result").textContent = "Result: " + result;
         }
     </script>
 </body>
